@@ -1,16 +1,31 @@
-export default function Layout({children}){
+export default function Layout({ children }) {
     return (
-        <>
-            <header>
-                <nav>
-                    <a className="nav-link" href="/">Home</a>
-                    <a className="nav-link" href="/create">Create</a>
+        <div className="flex min-h-screen">
+            {/* Sidebar */}
+            <aside className="w-64 bg-purple-500 text-white shadow-md h-screen px-4 py-6">
+                <div className="text-2xl font-semibold mb-8 text-center">
+                    <a href="/" className="hover:text-purple-200">Aurie Store</a>
+                </div>
+                <nav className="space-y-4">
+                    <a
+                        href="/"
+                        className="block px-3 py-2 rounded-md text-lg font-medium hover:bg-purple-600"
+                    >
+                        Home
+                    </a>
+                    <a
+                        href="/create"
+                        className="block px-3 py-2 rounded-md text-lg font-medium hover:bg-purple-600"
+                    >
+                        Create
+                    </a>
                 </nav>
-            </header>
+            </aside>
 
-            <main>
+            {/* Main Content */}
+            <main className="flex-1 p-8">
                 {children}
             </main>
-        </>
-    )
+        </div>
+    );
 }
