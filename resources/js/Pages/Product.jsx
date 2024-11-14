@@ -1,39 +1,39 @@
-import React from 'react';
-import { Link } from '@inertiajs/react';
+import { Link } from "@inertiajs/react";
 
 export default function Product({ products }) {
     return (
-        <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Products</h1>
-            <Link 
-                href="/products/create" 
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4 inline-block"
-            >
-                Add New Product
-            </Link>
-            {products.length === 0 ? (
-                <p>No products available.</p>
-            ) : (
-                <ul className="space-y-4">
-                    {products.map((product) => (
-                        <li key={product.id} className="border p-4 rounded-md shadow-sm">
-                            <div className="flex justify-between items-center">
-                                <span className="font-semibold">{product.name}</span>
-                                <span className="text-gray-600">${product.price}</span>
-                                <span className="text-sm text-gray-500">{product.stocks} in stock</span>
-                            </div>
-                            <div className="mt-2">
-                                <Link 
-                                    href={`/products/${product.id}/edit`} 
-                                    className="text-blue-600 hover:underline"
-                                >
-                                    Edit
-                                </Link>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
+        <>
+            <h1 className="text-3xl font-bold text-center my-6">Products</h1>
+            <div className="overflow-x-auto">
+                <table className="min-w-full bg-white shadow-md rounded-lg">
+                    <thead className="bg-gray-100">
+                        <tr>
+                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Product Name</th>
+                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Price</th>
+                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Stock</th>
+                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Created On</th>
+                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {products.map((product) => (
+                            <tr key={product.id} className="border-t">
+                                <td className="px-6 py-4 text-sm text-gray-800">{product.name}</td>
+                                <td className="px-6 py-4 text-sm text-gray-800">${product.price}</td>
+                                <td className="px-6 py-4 text-sm text-gray-800">{product.stocks}</td>
+                                <td className="px-6 py-4 text-sm text-gray-500">
+                                    {new Date(product.created_at).toLocaleString()}
+                                </td>
+                                <td className="px-6 py-4 text-sm text-blue-600">
+                                    <Link href={`/products/${product.id}/edit`} className="hover:underline">
+                                        Edit
+                                    </Link>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 }
