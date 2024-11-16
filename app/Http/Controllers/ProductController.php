@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use Inertia\Inertia;
 use App\Models\Product;
-
-
+use Illuminate\Http\Request;
+ 
 
 class ProductController extends Controller
 {
@@ -16,8 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->get();
-        return inertia('Product', [
+        $products = Product::latest()->paginate(5);
+        return inertia('Product/Index', [
             'products' => $products
         ]);
     }
@@ -27,24 +25,30 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Products/Create');
+        return Inertia::render('Product/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
-        $request->validate([
+        sleep(2);
+
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'stocks' => 'required|numeric',
+            'stocks' => 'required|integer',
         ]);
-        Product::create($validatedData);
-
+    
+        // Save the product in the database
+        Product::create($validated);
+    
+        // Redirect back to the products list with a success message
         return redirect()->route('products.index')->with('success', 'Product created successfully!');
 
     }
+    
 
     /**
      * Display the specified resource.
@@ -69,7 +73,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $Product)
+    public function update(Request $request, Product $Product)
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',

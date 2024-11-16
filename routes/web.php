@@ -9,3 +9,4 @@ Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 // Product resource routes for managing products
 Route::resource('products', ProductController::class);
+

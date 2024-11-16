@@ -20,6 +20,6 @@ class ProductSeeder extends Seeder
             'stocks' => 50,
         ]);
 
-        Product::factory(2)->create();
+        Product::factory(30)->create();
     }
 }

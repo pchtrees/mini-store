@@ -16,7 +16,7 @@ export default function Layout({ children }) {
                         Dashboard
                     </Link>
                     <Link
-                        href="/products"
+                        href="/products/"
                         className="block px-3 py-2 rounded-md text-lg font-medium hover:bg-purple-600"
                     >
                         Products
