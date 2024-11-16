@@ -33,8 +33,11 @@ export default function Index({ products }) {
                                     {new Date(product.created_at).toLocaleString()}
                                 </td>
                                 <td className="px-6 py-4 text-sm text-blue-600">
-                                    <Link href={`/products/${product.id}/edit`} className="hover:underline">
+                                    <Link href={`/products/${product.id}/edit`} className="hover:underline mx-2">
                                         Edit
+                                    </Link>
+                                    <Link href={`/products/${product.id}`} className="hover:underline">
+                                        Show
                                     </Link>
                                 </td>
                             </tr>

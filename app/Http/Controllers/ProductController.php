@@ -53,17 +53,16 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $Product)
+    public function show(Product $product)
     {
-        return inertia('Products/Show', [
-            'product' => $product
-        ]);
+        return inertia('Products/Show', 
+        ['product' => $product]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $Product)
+    public function edit(Product $product)
     {
         return Inertia::render('Products/Edit', [
             'product' => $product
@@ -73,7 +72,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $Product)
+    public function update(Request $request, Product $product)
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
@@ -88,7 +87,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $Product)
+    public function destroy(Product $product)
     {
         $product->delete();
 
