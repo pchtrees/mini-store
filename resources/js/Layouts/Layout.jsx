@@ -2,7 +2,7 @@ import { Link } from "@inertiajs/react";
 
 export default function Layout({ children }) {
     return (
-        <div className="flex min-h-screen">
+        <div className="flex min-h-screen bg-gray-200">
             {/* Sidebar */}
             <aside className="w-64 bg-purple-500 text-white shadow-md h-screen px-4 py-6">
                 <div className="text-2xl font-semibold mb-8 text-center">

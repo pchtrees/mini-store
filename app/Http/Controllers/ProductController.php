@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->paginate(5);
+        $products = Product::latest()->paginate(10);
         return inertia('Product/Index', [
             'products' => $products
         ]);
@@ -55,8 +55,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return inertia('Products/Show', 
-        ['product' => $product]);
+        return Inertia::render('Product/Show', [
+            'product' => $product,
+        ]);
     }
 
     /**
@@ -90,7 +91,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
+    
+        return redirect()->route('products.index');
     }
 }

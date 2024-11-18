@@ -1,5 +1,6 @@
 import { Link } from "@inertiajs/react";
 
+
 export default function Index({ products }) {
     return (
         <>
@@ -32,12 +33,15 @@ export default function Index({ products }) {
                                 <td className="px-6 py-4 text-sm text-gray-500">
                                     {new Date(product.created_at).toLocaleString()}
                                 </td>
-                                <td className="px-6 py-4 text-sm text-blue-600">
-                                    <Link href={`/products/${product.id}/edit`} className="hover:underline mx-2">
+                                <td className="px-6 py-4 text-sm text-blue-600 flex gap-2">
+                                    <Link href={`/products/${product.id}/edit`} className="hover:underline ">
                                         Edit
                                     </Link>
                                     <Link href={`/products/${product.id}`} className="hover:underline">
                                         Show
+                                    </Link>
+                                    <Link href={`/products/${product.id}`} className="hover:underline">
+                                        Delete
                                     </Link>
                                 </td>
                             </tr>
@@ -45,7 +49,7 @@ export default function Index({ products }) {
                     </tbody>
                 </table>
 
-                <div className="py-12 px-4">
+                <div className="py-12 px-4 flex justify-center">
                     {products.links.map(link => (
                         link.url ? (
                             <Link 
