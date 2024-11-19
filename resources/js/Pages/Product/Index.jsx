@@ -1,7 +1,14 @@
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
+import { useRoute } from "../../vendor/tightenco/ziggy";
+import { useRoute } from 'ziggy-js';
+
 
 
 export default function Index({ products }) {
+    const route = useRoute();
+
+    
+
     return (
         <>
             <h1 className="text-3xl font-bold">Products</h1>
@@ -37,10 +44,14 @@ export default function Index({ products }) {
                                     <Link href={`/products/${product.id}/edit`} className="hover:underline ">
                                         Edit
                                     </Link>
-                                    <Link href={`/products/${product.id}`} className="hover:underline">
+                                    {/* <Link href={`/products/${product.id}`} className="hover:underline">
+                                        Show
+                                    </Link> */}
+                                    <Link href={route('products.show', product)}
+                                    className="hover:underlined">
                                         Show
                                     </Link>
-                                    <Link href={`/products/${product.id}`} className="hover:underline">
+                                    <Link href={route('products.index')} className="hover:underline">
                                         Delete
                                     </Link>
                                 </td>

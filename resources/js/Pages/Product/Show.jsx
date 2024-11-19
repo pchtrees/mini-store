@@ -1,12 +1,15 @@
 import { useForm, Link } from "@inertiajs/react";
 
+
 export default function Show({ product }) {
     
     const { delete: destroy } = useForm();
+    const route = useRoute();
 
     function submit(e){
         e.preventDefault()
-        destroy(`/products/${product.id}`);
+        // destroy(`/products/${product.id}`);
+        destroy(route('products.destroy', product));
     }
 
     return (
