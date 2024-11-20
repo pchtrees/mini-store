@@ -92,7 +92,7 @@ class ProductController extends Controller
     {
         $product->delete();
     
-        return redirect()->route('product.index')->with(
+        return redirect()->route('products.index')->with(
             'message', 'The product was deleted!'
         );
     }

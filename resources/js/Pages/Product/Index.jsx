@@ -1,13 +1,15 @@
-import { Link, usePage } from "@inertiajs/react";
-import { useRoute } from "../../vendor/tightenco/ziggy";
-import { useRoute } from 'ziggy-js';
-
-
+import { Link, useForm } from "@inertiajs/react";
+import { route } from "ziggy-js"; // Correct import for route
 
 export default function Index({ products }) {
-    const route = useRoute();
+    // Initialize useForm hook to handle the delete action
+    const { delete: destroy } = useForm();
 
-    
+    // Handle delete action directly without confirmation
+    function handleDelete(productId, e) {
+        e.preventDefault();
+        destroy(route('products.destroy', productId)); // Pass the product ID to the route helper
+    }
 
     return (
         <>
@@ -41,19 +43,22 @@ export default function Index({ products }) {
                                     {new Date(product.created_at).toLocaleString()}
                                 </td>
                                 <td className="px-6 py-4 text-sm text-blue-600 flex gap-2">
-                                    <Link href={`/products/${product.id}/edit`} className="hover:underline ">
+                                    <Link href={`/products/${product.id}/edit`} className="hover:underline">
                                         Edit
                                     </Link>
-                                    {/* <Link href={`/products/${product.id}`} className="hover:underline">
-                                        Show
-                                    </Link> */}
-                                    <Link href={route('products.show', product)}
-                                    className="hover:underlined">
+                                    <Link href={route('products.show', product)} className="hover:underline">
                                         Show
                                     </Link>
-                                    <Link href={route('products.index')} className="hover:underline">
-                                        Delete
-                                    </Link>
+
+                                    {/* Delete Form */}
+                                    <form onSubmit={(e) => handleDelete(product.id, e)} className="inline">
+                                        <button 
+                                            type="submit" 
+                                            className="text-red-600 hover:text-red-800"
+                                        >
+                                            Delete
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         ))}

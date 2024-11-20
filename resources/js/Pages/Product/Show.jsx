@@ -1,15 +1,12 @@
 import { useForm, Link } from "@inertiajs/react";
-
+import { route } from "ziggy-js"; // Correct import for route
 
 export default function Show({ product }) {
-    
     const { delete: destroy } = useForm();
-    const route = useRoute();
 
-    function submit(e){
-        e.preventDefault()
-        // destroy(`/products/${product.id}`);
-        destroy(route('products.destroy', product));
+    function submit(e) {
+        e.preventDefault();
+        destroy(route('products.destroy', product.id)); // Pass the product ID to the route helper
     }
 
     return (
@@ -19,9 +16,9 @@ export default function Show({ product }) {
                 <p className="text-2xl font-medium text-purple-600">Price: ₱{product.price}</p>
                 <p className="text-2xl text-gray-700">Stocks: {product.stocks}</p>
             </div>
-            <div className="mt-6 text-sm  text-end">
+            <div className="mt-6 text-sm text-end">
                 <p>Created on: {new Date(product.created_at).toLocaleString()}</p>
-            </div> 
+            </div>
             <div className="mt-8 flex justify-between">
                 <Link
                     href="/products"
@@ -30,7 +27,12 @@ export default function Show({ product }) {
                     Back to Products
                 </Link>
                 <form onSubmit={submit}>
-                    <button className="inline-block bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition duration-200">Delete </button>
+                    <button
+                        type="submit"
+                        className="inline-block bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
+                    >
+                        Delete
+                    </button>
                 </form>
             </div>
         </div>
