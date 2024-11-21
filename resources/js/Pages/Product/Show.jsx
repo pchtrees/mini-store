@@ -1,4 +1,4 @@
-import { useForm, Link } from "@inertiajs/react";
+import { useForm, Link, Head } from "@inertiajs/react";
 import { route } from "ziggy-js"; // Correct import for route
 
 export default function Show({ product }) {
@@ -10,6 +10,10 @@ export default function Show({ product }) {
     }
 
     return (
+        <>
+        <Head>
+            <title>Show</title>
+        </Head>
         <div className="max-w-2xl mx-auto my-52 p-6 bg-white shadow-lg rounded-lg">
             <h1 className="text-5xl font-semibold text-gray-800 mb-4 text-center">{product.name}</h1>
             <div className="mb-4 text-center">
@@ -26,6 +30,7 @@ export default function Show({ product }) {
                 >
                     Back to Products
                 </Link>
+                
                 <form onSubmit={submit}>
                     <button
                         type="submit"
@@ -36,5 +41,6 @@ export default function Show({ product }) {
                 </form>
             </div>
         </div>
+        </>
     );
 }

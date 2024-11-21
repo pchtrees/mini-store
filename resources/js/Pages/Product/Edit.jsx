@@ -1,23 +1,28 @@
 import { useForm, Head } from '@inertiajs/react'
+import { route } from "ziggy-js"; 
 
-export default function Create() {
-    const { data, setData, post, errors, processing } = useForm({
-        name: "",
-        price: "",
-        stocks: "",
+
+export default function Edit({ product }) {
+    const { delete: destroy } = useForm();
+
+    const { data, setData, put, errors, processing } = useForm({
+        name: product.name,
+        price: product.price,
+        stocks: product.stocks,
     });
 
 function submit(e){
         e.preventDefault()
-        post("/products/")
+        //put(`/products/${product.id}`)
+        put(route('products.update', product))
     }
 
     return (
         <>
             <Head>
-                <title>Create</title>
+                <title>Edit</title>
             </Head>
-            <h1 className="text-3xl font-bold">Create Product</h1>
+            <h1 className="text-3xl font-bold">Update your Product</h1>
 
             <div className="w-full sm:w-full mx-auto p-4">
                 <form onSubmit={submit}>
@@ -62,7 +67,7 @@ function submit(e){
                         className="w-full bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition duration-200 py-2 mt-4"
                         disabled={processing} // Disable while processing
                     >
-                        Create
+                        Update
                     </button>
                 </form>
             </div>

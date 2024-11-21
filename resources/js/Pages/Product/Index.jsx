@@ -1,19 +1,40 @@
-import { Link, useForm } from "@inertiajs/react";
-import { route } from "ziggy-js"; // Correct import for route
+import { Head, Link, usePage } from "@inertiajs/react";
+import { route } from "ziggy-js"; 
+import { useState } from "react";
 
 export default function Index({ products }) {
-    // Initialize useForm hook to handle the delete action
-    const { delete: destroy } = useForm();
+    const { flash } = usePage().props;
 
-    // Handle delete action directly without confirmation
-    function handleDelete(productId, e) {
-        e.preventDefault();
-        destroy(route('products.destroy', productId)); // Pass the product ID to the route helper
-    }
+    const [flashMsg, setFlashMsg, flashSccs, setFlashSccs ] = useState(flash.message, flash.success);
+
+    setTimeout(() => {
+        setFlashMsg(null)
+    }, 2000)
+    setTimeout(() => {
+        setFlashSccs(null)
+    }, 2000)
+
+
 
     return (
         <>
+            <Head>
+                <title>Products</title>
+            </Head>
             <h1 className="text-3xl font-bold">Products</h1>
+            <div className="relative">
+                {flashMsg && (
+                    <div className="absolute left-1/2 transform -translate-x-1/2 top-18 bg-red-500 p-2 rounded-md shadow-lg text-sm text-white">
+                        {flashMsg}
+                    </div>
+                )}
+                {flashSccs && (
+                    <div className="absolute left-1/2 transform -translate-x-1/2 top-18 bg-green-700 p-2 rounded-md shadow-lg text-sm text-white">
+                        {flashSccs}
+                    </div>
+                )}
+            </div>
+
             <div className="flex justify-end my-4">
                 <Link 
                     href="/products/create" 
@@ -43,28 +64,19 @@ export default function Index({ products }) {
                                     {new Date(product.created_at).toLocaleString()}
                                 </td>
                                 <td className="px-6 py-4 text-sm text-blue-600 flex gap-2">
-                                    <Link href={`/products/${product.id}/edit`} className="hover:underline">
+                                    <Link href={route('products.edit', product)}  className="hover:underline">
                                         Edit
                                     </Link>
                                     <Link href={route('products.show', product)} className="hover:underline">
                                         Show
                                     </Link>
-
-                                    {/* Delete Form */}
-                                    <form onSubmit={(e) => handleDelete(product.id, e)} className="inline">
-                                        <button 
-                                            type="submit" 
-                                            className="text-red-600 hover:text-red-800"
-                                        >
-                                            Delete
-                                        </button>
-                                    </form>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
 
+                {/* Pagination Links */}
                 <div className="py-12 px-4 flex justify-center">
                     {products.links.map(link => (
                         link.url ? (

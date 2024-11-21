@@ -65,7 +65,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return Inertia::render('Products/Edit', [
+        return Inertia::render('Product/Edit', [
             'product' => $product
         ]);
     }
@@ -75,14 +75,16 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $validatedData = $request->validate([
+       $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'stocks' => 'required|numeric',
         ]);
         $product->update($validatedData);
 
-        return redirect()->route('products.index')->with('success', 'Product updated successfully!');
+        return redirect()->route('products.index')->with(
+            'success', 'The product was updated successfully!'
+        );
     }
 
     /**
