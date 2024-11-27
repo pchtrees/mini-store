@@ -14,8 +14,6 @@ export default function Index({ products }) {
         setFlashSccs(null)
     }, 2000)
 
-
-
     return (
         <>
             <Head>
