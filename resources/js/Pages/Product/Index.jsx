@@ -1,18 +1,11 @@
 import { Head, Link, usePage } from "@inertiajs/react";
-import { route } from "ziggy-js"; 
-import { useState } from "react";
+import { route } from "ziggy-js";
+import { useForm } from "@inertiajs/react";
 
 export default function Index({ products }) {
     const { flash } = usePage().props;
 
-    const [flashMsg, setFlashMsg, flashSccs, setFlashSccs ] = useState(flash.message, flash.success);
-
-    setTimeout(() => {
-        setFlashMsg(null)
-    }, 2000)
-    setTimeout(() => {
-        setFlashSccs(null)
-    }, 2000)
+    const { delete: destroy } = useForm();
 
     return (
         <>
@@ -21,14 +14,14 @@ export default function Index({ products }) {
             </Head>
             <h1 className="text-3xl font-bold">Products</h1>
             <div className="relative">
-                {flashMsg && (
+                {flash.message && (
                     <div className="absolute left-1/2 transform -translate-x-1/2 top-18 bg-red-500 p-2 rounded-md shadow-lg text-sm text-white">
-                        {flashMsg}
+                        {flash.message}
                     </div>
                 )}
-                {flashSccs && (
+                {flash.success && (
                     <div className="absolute left-1/2 transform -translate-x-1/2 top-18 bg-green-700 p-2 rounded-md shadow-lg text-sm text-white">
-                        {flashSccs}
+                        {flash.success}
                     </div>
                 )}
             </div>
@@ -62,12 +55,27 @@ export default function Index({ products }) {
                                     {new Date(product.created_at).toLocaleString()}
                                 </td>
                                 <td className="px-6 py-4 text-sm text-blue-600 flex gap-2">
-                                    <Link href={route('products.edit', product)}  className="hover:underline">
+                                    <Link href={route('products.edit', product)} className="hover:underline">
                                         Edit
                                     </Link>
                                     <Link href={route('products.show', product)} className="hover:underline">
                                         Show
                                     </Link>
+                                    <form
+                                        onSubmit={(e) => {
+                                            e.preventDefault();
+                                            if (window.confirm("Are you sure you want to delete this product?")) {
+                                                destroy(route('products.destroy', product.id));
+                                            }
+                                        }}
+                                    >
+                                        <button
+                                            type="submit"
+                                            className="text-red-600 hover:text-red-800"
+                                        >
+                                            Delete
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         ))}
@@ -95,7 +103,7 @@ export default function Index({ products }) {
                         )
                     ))}
                 </div>
-            </div> 
+            </div>
         </>
     );
 }
