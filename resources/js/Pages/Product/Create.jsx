@@ -3,6 +3,7 @@ import { useForm, Head } from '@inertiajs/react'
 export default function Create() {
     const { data, setData, post, errors, processing } = useForm({
         name: "",
+        category: "",
         price: "",
         stocks: "",
     });
@@ -19,11 +20,11 @@ function submit(e){
             </Head>
             <h1 className="text-3xl font-bold">Create Product</h1>
 
-            <div className="w-full sm:w-full mx-auto p-4">
+            <div className="w-full sm:w-1/2 mx-auto my-20 p-4">
                 <form onSubmit={submit}>
                     {/* Name input */}
                     <div className="mb-4">
-                        <label htmlFor="name" className="block">Product</label>
+                        <label htmlFor="name" className="block">Product Name</label>
                         <input
                             id='name'
                             type="text"
@@ -32,6 +33,24 @@ function submit(e){
                             onChange={(e) => setData('name', e.target.value)}
                         />
                         {errors.name && <p className='text-red-500'>{errors.name}</p>}
+                    </div>
+                    <div className="mb-4">
+                        <label htmlFor="name" className="block">Category</label>
+                        <select
+                            id="category"
+                            className={`w-full border-2 border-gray-300 rounded-lg p-4 focus:outline-none focus:ring-2 ${errors.category ? '!ring-red-500' : 'focus:ring-purple-500'}`}
+                            value={data.category}
+                            onChange={(e) => setData('category', e.target.value)}
+                        >
+                            <option value="" disabled>Select a category</option>
+                            <option value="DELATA">DELATA</option>
+                            <option value="NOODLES">NOODLES</option>
+                            <option value="PANG LUTO">PANG LUTO</option>
+                            <option value="SNACK & DRINKS">SNACK & DRINKS</option>
+                            <option value="PANG LABA">PANG LABA</option>
+                            <option value="HYGIENE">HYGIENE</option>
+                        </select>
+                        {errors.category && <p className='text-red-500'>{errors.category}</p>}
                     </div>
                     <div className="mb-4">
                         <label htmlFor="price" className="block">Price</label>
