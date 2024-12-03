@@ -16,6 +16,7 @@ export default function Show({ product }) {
         </Head>
         <div className="max-w-2xl mx-auto my-52 p-6 bg-white shadow-lg rounded-lg">
             <h1 className="text-5xl font-semibold text-gray-800 mb-4 text-center">{product.name}</h1>
+            <h1 className="text-5xl font-semibold text-gray-800 mb-4 text-center">{product.category}</h1>
             <div className="mb-4 text-center">
                 <p className="text-2xl font-medium text-purple-600">Price: ₱{product.price}</p>
                 <p className="text-2xl text-gray-700">Stocks: {product.stocks}</p>

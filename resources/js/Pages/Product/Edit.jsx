@@ -7,6 +7,7 @@ export default function Edit({ product }) {
 
     const { data, setData, put, errors, processing } = useForm({
         name: product.name,
+        category: product.category,
         price: product.price,
         stocks: product.stocks,
     });
@@ -24,7 +25,7 @@ function submit(e){
             </Head>
             <h1 className="text-3xl font-bold">Update your Product</h1>
 
-            <div className="w-full sm:w-full mx-auto p-4">
+            <div className="w-full sm:w-1/2 mx-auto my-20 p-4">
                 <form onSubmit={submit}>
                     {/* Name input */}
                     <div className="mb-4">
@@ -37,6 +38,17 @@ function submit(e){
                             onChange={(e) => setData('name', e.target.value)}
                         />
                         {errors.name && <p className='text-red-500'>{errors.name}</p>}
+                    </div>
+                    <div className="mb-4">
+                        <label htmlFor="name" className="block">Category</label>
+                        <input
+                            id='name'
+                            type="text"
+                            className={`w-full border-2 border-gray-300 rounded-lg p-4 focus:outline-none focus:ring-2 ${errors.name ? '!ring-red-500' : 'focus:ring-purple-500'}`}
+                            value={data.category}
+                            onChange={(e) => setData('name', e.target.value)}
+                        />
+                        {errors.name && <p className='text-red-500'>{errors.category}</p>}
                     </div>
                     <div className="mb-4">
                         <label htmlFor="price" className="block">Price</label>
