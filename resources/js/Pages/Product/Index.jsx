@@ -11,9 +11,11 @@ export default function Index({ products }) {
 
     const { delete: destroy } = useForm();
 
-    const handleFilterChange = (e) => {
-        setData("filter", e.target.value); // Update filter state
-    };
+const handleFilterChange = (e) => {
+    setData("filter", e.target.value); // Update filter state
+    // Optionally send the filter to the server here if it's not handled automatically
+};
+
 
     const filterProducts = (product) => {
         const filter = data.filter.toLowerCase();
