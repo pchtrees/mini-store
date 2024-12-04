@@ -5,24 +5,15 @@ import { useForm } from "@inertiajs/react";
 export default function Index({ products }) {
     const { flash } = usePage().props;
 
-    const { data, setData } = useForm({
-        filter: "", // Initialize filter state
+    const { data, setData, get } = useForm({
+        filter: "", // This represents the search input value
     });
-const handleFilterChange = (e) => {
-    setData("filter", e.target.value); // Update filter state
-    // Optionally send the filter to the server here if it's not handled automatically
-};
 
+    const handleFilterChange = (e) => {
+        setData("filter", e.target.value);
 
-    const filterProducts = (product) => {
-        const filter = data.filter.toLowerCase();
-        return (
-            product.name.toLowerCase().includes(filter) ||
-            product.category.toLowerCase().includes(filter) ||
-            product.price.toString().includes(filter) ||
-            product.stocks.toString().includes(filter) ||
-            new Date(product.created_at).toLocaleString().toLowerCase().includes(filter)
-        );
+        // Trigger a GET request to refresh the data
+        get(route("products.index"), { preserveState: true, replace: true });
     };
 
     return (
@@ -74,42 +65,40 @@ const handleFilterChange = (e) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.data
-                            .filter(filterProducts)
-                            .map((product) => (
-                                <tr key={product.id} className="border-t">
-                                    <td className="px-6 py-4 text-sm text-gray-800">{product.name}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-800">{product.category}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-800">₱{product.price}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-800">{product.stocks}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-500">
-                                        {new Date(product.created_at).toLocaleString()}
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-blue-600 flex gap-2">
-                                        <Link href={route('products.edit', product)} className="hover:underline">
-                                            Edit
-                                        </Link>
-                                        <Link href={route('products.show', product)} className="hover:underline">
-                                            Show
-                                        </Link>
-                                        <form
-                                            onSubmit={(e) => {
-                                                e.preventDefault();
-                                                if (window.confirm("Are you sure you want to delete this product?")) {
-                                                    destroy(route('products.destroy', product.id));
-                                                }
-                                            }}
+                        {products.data.map((product) => (
+                            <tr key={product.id} className="border-t">
+                                <td className="px-6 py-4 text-sm text-gray-800">{product.name}</td>
+                                <td className="px-6 py-4 text-sm text-gray-800">{product.category}</td>
+                                <td className="px-6 py-4 text-sm text-gray-800">₱{product.price}</td>
+                                <td className="px-6 py-4 text-sm text-gray-800">{product.stocks}</td>
+                                <td className="px-6 py-4 text-sm text-gray-500">
+                                    {new Date(product.created_at).toLocaleString()}
+                                </td>
+                                <td className="px-6 py-4 text-sm text-blue-600 flex gap-2">
+                                    <Link href={route('products.edit', product)} className="hover:underline">
+                                        Edit
+                                    </Link>
+                                    <Link href={route('products.show', product)} className="hover:underline">
+                                        Show
+                                    </Link>
+                                    <form
+                                        onSubmit={(e) => {
+                                            e.preventDefault();
+                                            if (window.confirm("Are you sure you want to delete this product?")) {
+                                                destroy(route('products.destroy', product.id));
+                                            }
+                                        }}
+                                    >
+                                        <button
+                                            type="submit"
+                                            className="text-red-600 hover:text-red-800"
                                         >
-                                            <button
-                                                type="submit"
-                                                className="text-red-600 hover:text-red-800"
-                                            >
-                                                Delete
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            ))}
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
 

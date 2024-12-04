@@ -12,14 +12,28 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+
+    public function index(Request $request)
     {
-        $products = Product::latest()->paginate(10);
+        $products = Product::query()
+            ->when($request->input('filter'), function ($query, $filter) {
+                $query->where('name', 'like', '%' . $filter . '%')
+                      ->orWhere('category', 'like', '%' . $filter . '%')
+                      ->orWhere('price', 'like', '%' . $filter . '%')
+                      ->orWhere('stocks', 'like', '%' . $filter . '%');
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+    
         return inertia('Product/Index', [
-            'products' => $products
+            'products' => $products,
+            'filters' => $request->only(['filter']),
         ]);
     }
-
+    
+    
     /**
      * Show the form for creating a new resource.
      */
