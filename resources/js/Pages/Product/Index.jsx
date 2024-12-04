@@ -8,9 +8,6 @@ export default function Index({ products }) {
     const { data, setData } = useForm({
         filter: "", // Initialize filter state
     });
-
-    const { delete: destroy } = useForm();
-
 const handleFilterChange = (e) => {
     setData("filter", e.target.value); // Update filter state
     // Optionally send the filter to the server here if it's not handled automatically
