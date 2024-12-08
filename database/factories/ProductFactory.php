@@ -21,7 +21,9 @@ class ProductFactory extends Factory
             'name' => $this->faker->unique()->word(),
             'category' => $this->faker->unique()->word(),
             'price' => $this->faker->randomFloat(2, 1, 100), 
+            'barcode' => $this->faker->unique()->word(), 
             'stocks' => $this->faker->numberBetween(1, 100), 
+            'status' => $this->faker->randomElement([true, false]),
         ];
     }
 }

@@ -19,10 +19,9 @@ export default function Show({ product }) {
             <h1 className="text-5xl font-semibold text-gray-800 mb-4 text-center">{product.category}</h1>
             <div className="mb-4 text-center">
                 <p className="text-2xl font-medium text-purple-600">Price: ₱{product.price}</p>
+                <p className="text-2xl text-gray-700">Barcode: {product.barcode}</p>
                 <p className="text-2xl text-gray-700">Stocks: {product.stocks}</p>
-            </div>
-            <div className="mt-6 text-sm text-end">
-                <p>Created on: {new Date(product.created_at).toLocaleString()}</p>
+                <p className="text-2xl text-gray-700">Status: {product.status}</p>
             </div>
             <div className="mt-8 flex justify-between">
                 <Link

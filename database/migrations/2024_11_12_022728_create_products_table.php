@@ -16,7 +16,9 @@ return new class extends Migration
             $table->text('name');
             $table->text('category');
             $table->decimal('price',  8, 2); 
-            $table->integer('stocks'); 
+            $table->unsignedBigInteger('barcode')->unique(); 
+            $table->integer('stocks');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

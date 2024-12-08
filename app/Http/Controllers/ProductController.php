@@ -12,8 +12,6 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-
-
     public function index(Request $request)
     {
         $products = Product::query()
@@ -21,19 +19,20 @@ class ProductController extends Controller
                 $query->where('name', 'like', '%' . $filter . '%')
                       ->orWhere('category', 'like', '%' . $filter . '%')
                       ->orWhere('price', 'like', '%' . $filter . '%')
-                      ->orWhere('stocks', 'like', '%' . $filter . '%');
+                      ->orWhere('barcode', 'like', '%' . $filter . '%') 
+                      ->orWhere('stocks', 'like', '%' . $filter . '%')
+                      ->orWhere('status', 'like', '%' . $filter . '%');
             })
             ->latest()
             ->paginate(10)
             ->withQueryString();
-    
+
         return inertia('Product/Index', [
             'products' => $products,
             'filters' => $request->only(['filter']),
         ]);
     }
-    
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -53,17 +52,17 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'category' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'stocks' => 'required|integer',
+            'barcode' => 'required|numeric|digits_between:1,18',
+            'stocks' => 'required|integer', 
+            'status' => 'required|boolean',
         ]);
-    
+
         // Save the product in the database
         Product::create($validated);
-    
+
         // Redirect back to the products list with a success message
         return redirect()->route('products.index')->with('success', 'Product created successfully!');
-
     }
-    
 
     /**
      * Display the specified resource.
@@ -90,12 +89,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-       $validatedData = $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'category' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'stocks' => 'required|numeric',
+            'barcode' => 'required|numeric|digits_between:1,18',
+            'stocks' => 'required|numeric', 
+            'status' => 'required|boolean', 
         ]);
+
         $product->update($validatedData);
 
         return redirect()->route('products.index')->with(
@@ -109,7 +111,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-    
+
         return redirect()->route('products.index')->with(
             'message', 'The product was deleted!'
         );

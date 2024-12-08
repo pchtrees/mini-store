@@ -59,8 +59,9 @@ export default function Index({ products }) {
                             <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Product Name</th>
                             <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Category</th>
                             <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Price</th>
+                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Barcode</th>
                             <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Stocks</th>
-                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Created On</th>
+                            <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Status</th>
                             <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>
@@ -70,10 +71,9 @@ export default function Index({ products }) {
                                 <td className="px-6 py-4 text-sm text-gray-800">{product.name}</td>
                                 <td className="px-6 py-4 text-sm text-gray-800">{product.category}</td>
                                 <td className="px-6 py-4 text-sm text-gray-800">₱{product.price}</td>
+                                <td className="px-6 py-4 text-sm text-gray-800">{product.barcode}</td>
                                 <td className="px-6 py-4 text-sm text-gray-800">{product.stocks}</td>
-                                <td className="px-6 py-4 text-sm text-gray-500">
-                                    {new Date(product.created_at).toLocaleString()}
-                                </td>
+                                <td className="px-6 py-4 text-sm text-gray-800">{product.status}</td>
                                 <td className="px-6 py-4 text-sm text-blue-600 flex gap-2">
                                     <Link href={route('products.edit', product)} className="hover:underline">
                                         Edit

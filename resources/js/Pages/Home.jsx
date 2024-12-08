@@ -5,8 +5,8 @@ export default function Home({ home }) {
     return (
         <div>
         <Head title={component}></Head>
-        <h1 class="text-3xl font-bold text-center">Welcome to the Dashboard</h1>
-        <p class="text-center">This is your dashboard page.</p>
+        <h1 className="text-3xl font-bold text-center">Welcome to the Dashboard</h1>
+        <p className="text-center">This is your dashboard page.</p>
       </div>
     );
 }
