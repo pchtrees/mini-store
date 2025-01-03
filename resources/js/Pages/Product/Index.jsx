@@ -1,11 +1,14 @@
-import { Head, Link, usePage } from "@inertiajs/react";
+import { Head, Link, usePage, useForm } from "@inertiajs/react";
 import { route } from "ziggy-js"; 
 import { useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default function Index({ products }) {
     const { flash } = usePage().props;
 
-    const [flashMsg, setFlashMsg, flashSccs, setFlashSccs ] = useState(flash.message, flash.success);
+    const [flashMsg, setFlashMsg] = useState(flash.message);
+    const [flashSccs, setFlashSccs] = useState(flash.success);
 
     setTimeout(() => {
         setFlashMsg(null)
@@ -14,7 +17,12 @@ export default function Index({ products }) {
         setFlashSccs(null)
     }, 2000)
 
+    const { delete: destroy } = useForm();
 
+    function submit(e) {
+        e.preventDefault();
+        destroy(route('products.destroy', product.id)); // Pass the product ID to the route helper
+    }
 
     return (
         <>
@@ -55,24 +63,38 @@ export default function Index({ products }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.data.map((product) => (
-                            <tr key={product.id} className="border-t">
-                                <td className="px-6 py-4 text-sm text-gray-800">{product.name}</td>
-                                <td className="px-6 py-4 text-sm text-gray-800">₱{product.price}</td>
-                                <td className="px-6 py-4 text-sm text-gray-800">{product.stocks}</td>
-                                <td className="px-6 py-4 text-sm text-gray-500">
-                                    {new Date(product.created_at).toLocaleString()}
-                                </td>
-                                <td className="px-6 py-4 text-sm text-blue-600 flex gap-2">
-                                    <Link href={route('products.edit', product)}  className="hover:underline">
-                                        Edit
-                                    </Link>
-                                    <Link href={route('products.show', product)} className="hover:underline">
-                                        Show
-                                    </Link>
-                                </td>
-                            </tr>
-                        ))}
+                        {products.data.map((product) => {
+                            // Setup the form hook for each product
+
+                            function submit(e) {
+                                e.preventDefault();
+                                destroy(route('products.destroy', product.id)); // Pass product.id dynamically
+                            }
+
+                            return (
+                                <tr key={product.id} className="border-t">
+                                    <td className="px-6 py-4 text-sm text-gray-800">{product.name}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-800">₱{product.price}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-800">{product.stocks}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-500">
+                                        {new Date(product.created_at).toLocaleString()}
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-blue-600 flex gap-2">
+                                        <Link href={route('products.edit', product)}  className="hover:underline">
+                                            <FontAwesomeIcon icon={faEdit} className="text-purple-700" /> 
+                                        </Link>
+                                        <Link href={route('products.show', product)} className="hover:underline">
+                                            <FontAwesomeIcon icon={faEye} className="text-purple-700" />
+                                        </Link>
+                                        <form onSubmit={submit}>
+                                            <button type="submit">
+                                                <FontAwesomeIcon icon={faTrash} className="text-red-500" />
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
 

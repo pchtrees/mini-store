@@ -30,6 +30,15 @@ export default function Show({ product }) {
                 >
                     Back to Products
                 </Link>
+                
+                <form onSubmit={submit}>
+                    <button
+                        type="submit"
+                        className="inline-block bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
+                    >
+                        Delete
+                    </button>
+                </form>
             </div>
         </div>
         </>
